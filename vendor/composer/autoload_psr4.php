@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Faresnassar09\\ApiRepository\\' => array($baseDir . '/src'),
+    'Faresnassar09\\ApiVault\\' => array($baseDir . '/src'),
 );

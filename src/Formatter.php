@@ -1,6 +1,6 @@
 <?php
 
-namespace Faresnassar09\ApiRepository;
+namespace Faresnassar09\ApiVault;
 
 class Formatter{
 
