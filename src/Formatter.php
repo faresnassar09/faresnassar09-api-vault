@@ -1,27 +1,48 @@
 <?php
 
-namespace Faresnassar09\ApiVault;
+namespace Faresnassar0\ApiVault;
 
-class Formatter{
+use Illuminate\Http\JsonResponse;
+
+class Formatter
+{
 
 
-    public function success($data = [], $message = "Success", $code = 200)
-    {
+    public function successResponse(
+        $message,
+        $data = [],
+        $code = 200,
+        $headers = [],
+        $options = 0
+
+    ): JsonResponse {
+
         return response()->json([
-            'status'  => true,
+
+            'success' => true,
             'message' => $message,
-            'data'    => $data
-        ], $code);
+            'data' => $data,
+            'code' => $code,
+
+        ], $code, $headers, $options);
     }
 
-    
-    public function failed($message = "Error occurred", $code = 400)
-    {
-        return response()->json([
-            'status'  => false,
-            'message' => $message,
-            'data'    => null
-        ], $code);
-    }
+    public function failedResponse(
+        $message = '',
+        $data = [],
+        $code = 500,
+        $headers = [],
+        $options = 0
 
+    ): JsonResponse {
+
+        return response()->json([
+
+            'success' => false,
+            'message' => $message,
+            'data' => $data,
+            'code' => $code,
+
+        ], $code, $headers, $options,);
+    }
 }
