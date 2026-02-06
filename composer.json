@@ -1,5 +1,6 @@
 {
     "name": "faresnassar09/api-vault",
+    "license": "MIT",
     "description": "Laravel package provides many features and ways to deal easly with apis",
     "type": "library",
     "autoload": {
