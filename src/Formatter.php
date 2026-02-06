@@ -2,18 +2,25 @@
 
 namespace Faresnassar09\ApiVault;
 
+use Closure;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cache;
 
 class Formatter
 {
 
+    /*
+    
+    Retrieve Success Response
+
+    */
 
     public function successResponse(
-        $message,
+        string $message,
         $data = [],
-        $code = 200,
-        $headers = [],
-        $options = 0
+        int $code = 200,
+        array $headers = [],
+        int $options = 0
 
     ): JsonResponse {
 
@@ -27,12 +34,18 @@ class Formatter
         ], $code, $headers, $options);
     }
 
+    /*
+    
+    Retrieve Failed Response
+
+    */
+
     public function failedResponse(
-        $message = '',
+        string $message = '',
         $data = [],
-        $code = 500,
-        $headers = [],
-        $options = 0
+        int $code = 500,
+        array $headers = [],
+        int $options = 0
 
     ): JsonResponse {
 
@@ -43,6 +56,37 @@ class Formatter
             'data' => $data,
             'code' => $code,
 
-        ], $code, $headers, $options,);
+        ], $code, $headers, $options);
+    }
+
+        /*
+    
+    Retrieve Success Response With Cached Data And Cache Data in case it's not cached
+
+    */
+
+    public function successResponseWithCaching(
+
+        Closure  $callback,
+        string $cacheKey = 'key', 
+        int $timeToDestroy = 3600,
+        string $message = 'Success', 
+        int $code = 200,            
+        array $headers = [],
+        int $options = 0
+
+    ) {
+        
+$data = Cache::remember($cacheKey, $timeToDestroy, function () use ($callback) {
+    return $callback();
+});
+
+        return $this->successResponse(
+            $message,
+            $data,
+            $code,
+            $headers,
+            $options
+        );
     }
 }
