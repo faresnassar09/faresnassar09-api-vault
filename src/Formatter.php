@@ -1,6 +1,6 @@
 <?php
 
-namespace Faresnassar0\ApiVault;
+namespace Faresnassar09\ApiVault;
 
 use Illuminate\Http\JsonResponse;
 
