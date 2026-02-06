@@ -1,5 +1,5 @@
 {
-    "name": "faresnassar09/api-repository",
+    "name": "faresnassar09/api-vault",
     "description": "Laravel package provides many features and ways to deal easly with apis",
     "type": "library",
     "autoload": {
