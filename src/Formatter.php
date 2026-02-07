@@ -9,84 +9,100 @@ use Illuminate\Support\Facades\Cache;
 class Formatter
 {
 
-    /*
-    
-    Retrieve Success Response
+    protected ?Closure $callback = null;
+    protected string $cacheKey = 'cache_key';
+    protected int $timeToDestroy = 3600;
+    protected mixed $data = null;
+    protected string $message = 'Success';
+    protected int $code = 200;
+    protected array $headers=[];
+    protected int $options = 0;
+    protected bool $success = true;
 
-    */
+    public function message($message){
 
-    public function successResponse(
-        string $message,
-        $data = [],
-        int $code = 200,
-        array $headers = [],
-        int $options = 0
+        $this->message = $message;
 
-    ): JsonResponse {
-
-        return response()->json([
-
-            'success' => true,
-            'message' => $message,
-            'data' => $data,
-            'code' => $code,
-
-        ], $code, $headers, $options);
+        return $this;
     }
 
-    /*
-    
-    Retrieve Failed Response
+    public function data($data){
 
-    */
+        $this->data = $data;
 
-    public function failedResponse(
-        string $message = '',
-        $data = [],
-        int $code = 500,
-        array $headers = [],
-        int $options = 0
-
-    ): JsonResponse {
-
-        return response()->json([
-
-            'success' => false,
-            'message' => $message,
-            'data' => $data,
-            'code' => $code,
-
-        ], $code, $headers, $options);
+        return $this;
     }
 
-        /*
-    
-    Retrieve Success Response With Cached Data And Cache Data in case it's not cached
+    public function code($code){
 
-    */
+        $this->code = $code;
 
-    public function successResponseWithCaching(
+        return $this;
+    }
 
-        Closure  $callback,
-        string $cacheKey = 'key', 
-        int $timeToDestroy = 3600,
-        string $message = 'Success', 
-        int $code = 200,            
-        array $headers = [],
-        int $options = 0
+    public function headers($headers){
 
-    ) {
+        $this->headers = $headers;
+
+        return $this;
+    }
+
+    public function options($options){
+
+        $this->options = $options;
+
+        return $this;
+    }
+
+    public function callback(Closure $callback){
+
+        $this->callback = $callback;
+
+        return $this;
+
+    }
+
+    public function cache($cachingKey,$timeToDestroy){
+
+
+        $this->cacheKey = $cachingKey;
+        $this->timeToDestroy = $timeToDestroy;
         
-$data = Cache::remember($cacheKey, $timeToDestroy, function () use ($callback) {
-    return $callback();
-});
+        return $this;
 
-        return $this->successResponse(
-            $message,
-            $data,
-            $code,
-            $headers,
-            $options
-        );
     }
-}
+
+    private function dataResorver(){
+
+        if ($this->callback && $this->cacheKey !== 'cache_key') {
+
+            $callback = $this->callback;
+            
+            return Cache::remember($this->cacheKey, $this->timeToDestroy, function() use ($callback) {
+                return $callback();
+            });
+        }
+        elseif ($this->callback) {
+
+            return ($this->callback)();
+        }
+
+        return $this->data;
+
+        }
+
+
+    public function respond(): JsonResponse {
+
+        $data = $this->dataResorver();
+
+        return response()->json([
+
+            'success' => $this->success,
+            'message' => $this->message,
+            'data' => $data,
+            'code' => $this->code,
+
+        ], $this->code, $this->headers, $this->options);
+    }
+    }
