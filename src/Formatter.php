@@ -5,38 +5,64 @@ namespace Faresnassar09\ApiVault;
 use Illuminate\Http\JsonResponse;
 use Faresnassar09\ApiVault\Traits\Formatting\HasCaching;
 use Faresnassar09\ApiVault\Traits\Formatting\HasResponseMetadata;
+use Faresnassar09\ApiVault\Traits\Formatting\HasPagination;
+
 
 class Formatter
 {
 
-    use HasCaching,HasResponseMetadata;
+    use HasCaching,
+        HasResponseMetadata,
+        HasPagination;
 
-    private function dataResorver(){
+
+
+    private function dataResorver()
+    {
+
+        $result = null;
 
         if ($this->callback && $this->cacheKey !== 'cache_key') {
-            return $this->resolveCachedData();
+            $result = $this->resolveCachedData();
+        } elseif ($this->callback) {
+
+            $result = ($this->callback)();
+        } else {
+
+
+            $result = $this->data;
         }
-        elseif ($this->callback) {
 
-            return ($this->callback)();
+        if ($result instanceof \Illuminate\Contracts\Pagination\Paginator) {
+
+            $this->preparePaginatedData($result);
+
+            $result = $result->items();
         }
 
-        return $this->data;
+        return $result;
+    }
 
-        }
 
-
-    public function respond(): JsonResponse {
+    public function respond(): JsonResponse
+    {
 
         $data = $this->dataResorver();
 
-        return response()->json([
+        $finalResponse = [
 
             'success' => $this->success,
             'message' => $this->message,
             'data' => $data,
             'code' => $this->code,
 
-        ], $this->code, $this->headers, $this->options);
+
+        ];
+
+        if ($this->paginationData) {
+            $finalResponse['pagination'] = $this->paginationData;
+        }
+
+        return response()->json($finalResponse, $this->code, $this->headers, $this->options);
     }
-    }
+}

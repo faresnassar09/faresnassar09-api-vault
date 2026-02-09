@@ -30,21 +30,21 @@ trait HasResponseMetadata
         return $this;
     }
 
-    public function code($code){
+    public function code($code = 200){
 
         $this->code = $code;
 
         return $this;
     }
 
-    public function headers($headers){
+    public function headers($headers =[]){
 
         $this->headers = $headers;
 
         return $this;
     }
 
-    public function options($options){
+    public function options($options = 0){
 
         $this->options = $options;
 
