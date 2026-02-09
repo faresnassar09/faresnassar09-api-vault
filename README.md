@@ -15,25 +15,31 @@ In professional Laravel applications (especially ERPs), managing consistent API 
 - ✅ **Smart Caching:** High-speed performance with page-aware caching (no more pagination conflicts).
 - ✅ **Clean Architecture:** Keep your controllers slim and focused on logic.
 
+## 🛠 Installation
+
+You can install the package via composer:
+
+```bash
+composer require faresnassar09/api-vault
+
 ---
-
-
-🚀 How to Use (Usage Guide)
+🚀 Usage Guide
 1. Simple Data Response
+You can quickly return a formatted response using the data() method. This is ideal for collections or simple arrays.
 
+<p align="center"> <img src="docs/images/image1.png" alt="Simple Response Example" width="700"> </p>
 
+2. Advanced Caching & Callbacks
+For high-performance endpoints, use the cache() and callback() methods. This ensures your database isn't hit unnecessarily and handles pagination perfectly.
 
-2. Automatic Pagination & Caching (The Pro Way)
-Using callback() is the recommended way for pagination. ApiVault will execute the query, handle the pagination meta-data, and cache it uniquely per page.
+<p align="center"> <img src="docs/images/image1.png" alt="Cached Response Example" width="700"> </p>
 
-
-
-
-
-3. Detailed Chaining Options
+⚙️ Detailed Chaining Options
 📊 Standard Response Structure
+Every response returns a consistent structure, making life easier for Frontend developers:
+
 📞 Contact Me
-Whether you have a suggestion, found a bug, or want to collaborate on a project, feel free to reach out!
+Whether you have a suggestion, found a bug, or want to collaborate, feel free to reach out!
 
 Name: Fares Nassar (ايرانور)
 
@@ -41,31 +47,24 @@ Role: Backend Laravel Developer
 
 GitHub:
 
-LinkedIn: (Update this link)
+LinkedIn:
 
-Email: (Update this email)
+Email:
 
 🤝 Contributing
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
+Fork the Project.
 
-Fork the Project
+Create your Feature Branch.
 
-Create your Feature Branch
+Commit your Changes.
 
-Commit your Changes
+Push to the Branch.
 
-Push to the Branch
-
-Open a Pull Request
+Open a Pull Request.
 
 📜 License
 Distributed under the MIT License. See LICENSE for more information.
 
 Created with ❤️ by Fares Nassar
 
-## 🛠 Installation
 
-You can install the package via composer:
-
-```bash
-composer require faresnassar09/api-vault
