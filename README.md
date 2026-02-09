@@ -143,6 +143,7 @@ MIT License
 
 Fares Nassar  
 GitHub: https://github.com/faresnassar09  
+Email: fares.ahmed.nassar0@gmail.com
 
 ---
 
