@@ -1,11 +1,11 @@
 <?php
 
-namespace Faresnassar\ApiVault;
+namespace FaresNassar\ApiVault;
 
 use Illuminate\Http\JsonResponse;
-use Faresnassar\ApiVault\Traits\Formatting\HasCaching;
-use Faresnassar\ApiVault\Traits\Formatting\HasResponseMetadata;
-use Faresnassar\ApiVault\Traits\Formatting\HasPagination;
+use FaresNassar\ApiVault\Traits\Formatting\HasCaching;
+use FaresNassar\ApiVault\Traits\Formatting\HasResponseMetadata;
+use FaresNassar\ApiVault\Traits\Formatting\HasPagination;
 
 
 class Formatter

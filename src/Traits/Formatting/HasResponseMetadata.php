@@ -1,6 +1,6 @@
 <?php
 
-namespace Faresnassar\ApiVault\Traits\Formatting;
+namespace FaresNassar\ApiVault\Traits\Formatting;
 use Closure;
 
 
