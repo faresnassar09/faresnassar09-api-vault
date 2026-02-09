@@ -5,7 +5,7 @@
     "type": "library",
     "autoload": {
         "psr-4": {
-            "Faresnassar09\\ApiVault\\": "src/"
+            "FaresNassar\\ApiVault\\": "src/"
         }
     },
     "authors": [
