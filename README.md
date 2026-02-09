@@ -35,6 +35,7 @@ use FaresNassar\ApiVault\Formatter;
 $formatter = new Formatter();
 
 return $formatter
+    ->success(true)
     ->message('Users Retrieved Successfully')
     ->data(User::all())
     ->code(200)
@@ -45,6 +46,7 @@ return $formatter
 
 ```php
 return $formatter
+    ->success(true)
     ->message('Users Retrieved And Cached Successfully')
     ->cache('users_cache_key', 600)
     ->callback(fn () => User::where('id', '<', 10000)->get())
@@ -56,6 +58,7 @@ return $formatter
 
 ```php
 return $formatter
+    ->success(true)
     ->message('Users Retrieved Successfully')
     ->callback(fn () => User::all()) // lazy evaluation, no caching
     ->code(200)
@@ -66,6 +69,7 @@ return $formatter
 
 ```php
 return $formatter
+    ->success(true)
     ->message('Users Retrieved Successfully')
     ->data(User::all())
     ->additional([
@@ -80,6 +84,7 @@ return $formatter
 
 ```php
 return $formatter
+    ->success(true)
     ->message('Custom Response')
     ->data($data)
     ->headers([
@@ -93,6 +98,7 @@ return $formatter
 
 ## 🛠️ Available Methods
 
+- `success()`      → Set response status (true || false)
 - `message()`      → Set response message  
 - `data()`         → Set response data directly  
 - `cache()`        → Enable caching (key, seconds)  

@@ -17,6 +17,14 @@ trait HasResponseMetadata
     protected bool $success = true;
 
 
+
+    public function success($success = true){
+
+        $this->success = $success;
+
+        return $this;
+    }
+
     public function message($message){
 
         $this->message = $message;
