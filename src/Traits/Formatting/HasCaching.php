@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Cache;
 
 trait HasCaching 
 {
-    protected string $cacheKey = 'cache_key';
+    protected $cacheKey = null;
     protected int $timeToDestroy = 3600;
   
     public function cache($cachingKey,$timeToDestroy){

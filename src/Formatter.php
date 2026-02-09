@@ -17,12 +17,14 @@ class Formatter
 
 
 
-    private function dataResorver()
+    private function dataResolver()
     {
 
-        $result = null;
+       try {
+             
+            $result = null;
 
-        if ($this->callback && $this->cacheKey !== 'cache_key') {
+        if ($this->callback && $this->cacheKey) {
             $result = $this->resolveCachedData();
         } elseif ($this->callback) {
 
@@ -40,14 +42,28 @@ class Formatter
             $result = $result->items();
         }
 
-        return $result;
+        return $result;        
+
+        } catch (\Throwable $th) {
+
+         \Log::error('An error occurred while resolving data ',[$th]);
+
+         $this->success = false;
+         $this->code = 500;
+         $this->message = 'An error occurred while processing data.';
+         
+         return null;
+
+        }
+
+
     }
 
 
     public function send(): JsonResponse
     {
 
-        $data = $this->dataResorver();
+        $data = $this->dataResolver();
 
         $finalResponse = [
 
