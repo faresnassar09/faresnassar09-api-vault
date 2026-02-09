@@ -44,7 +44,7 @@ class Formatter
     }
 
 
-    public function respond(): JsonResponse
+    public function send(): JsonResponse
     {
 
         $data = $this->dataResorver();
@@ -56,12 +56,18 @@ class Formatter
             'data' => $data,
             'code' => $this->code,
 
-
         ];
+
+        if(!empty($this->additional)){
+
+            $finalResponse ['additional'] = $this->additional;
+        }
 
         if ($this->paginationData) {
             $finalResponse['pagination'] = $this->paginationData;
         }
+
+
 
         return response()->json($finalResponse, $this->code, $this->headers, $this->options);
     }

@@ -11,6 +11,7 @@ trait HasResponseMetadata
     protected string $message = 'Success';
     protected int $code = 200;
     protected array $headers=[];
+    protected array $additional = [];
     protected int $options = 0;
     protected ?Closure $callback = null;
     protected bool $success = true;
@@ -40,6 +41,13 @@ trait HasResponseMetadata
     public function headers($headers =[]){
 
         $this->headers = $headers;
+
+        return $this;
+    }
+
+    public function additional($additional = []){
+
+        $this->additional = $additional;
 
         return $this;
     }

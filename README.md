@@ -1,70 +1,143 @@
-# 🚀 ApiVault
+# 🔐 API Vault
 
-**ApiVault** is a fluent and expressive Laravel package designed to streamline API responses. It provides a clean, unified response structure, automatic pagination handling, and smart caching—all through an elegant **Method Chaining (Fluent) API**.
+**API Vault** is a lightweight Laravel utility for building clean, consistent, and chainable API responses with optional caching, callbacks, headers, and response customization.
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/faresnassar09/api-vault.svg?style=flat-square)](https://packagist.org/packages/faresnassar09/api-vault)
-[![Total Downloads](https://img.shields.io/packagist/dt/faresnassar09/api-vault.svg?style=flat-square)](https://packagist.org/packages/faresnassar09/api-vault)
+It helps you avoid repetitive response logic and keeps your controllers clean and readable.
 
 ---
 
-## 🔥 Why ApiVault?
+## ✨ Features
 
-In professional Laravel applications (especially ERPs), managing consistent API responses can be repetitive. **ApiVault** solves this by:
-- ✅ **Method Chaining:** A readable, developer-friendly way to build responses.
-- ✅ **Auto-Pagination:** Detects Paginator instances and extracts meta-data automatically.
-- ✅ **Smart Caching:** High-speed performance with page-aware caching (no more pagination conflicts).
-- ✅ **Clean Architecture:** Keep your controllers slim and focused on logic.
+- Fluent method chaining for API responses  
+- Optional caching support  
+- Lazy data execution using callbacks (with or without caching)  
+- Unified response structure  
+- Custom headers & JSON options support  
+- Clean and expressive syntax  
 
-## 🛠 Installation
+---
 
-You can install the package via composer:
+## 📦 Installation
 
 ```bash
 composer require faresnassar09/api-vault
+```
 
 ---
-🚀 Usage Guide
-1. Simple Data Response
-You can quickly return a formatted response using the data() method. This is ideal for collections or simple arrays.
 
-<p align="center"> <img src="docs/images/image1.png" alt="Simple Response Example" width="700"> </p>
+## 🚀 Usage Examples
 
-2. Advanced Caching & Callbacks
-For high-performance endpoints, use the cache() and callback() methods. This ensures your database isn't hit unnecessarily and handles pagination perfectly.
+### 1️⃣ Basic data response
 
-<p align="center"> <img src="docs/images/image1.png" alt="Cached Response Example" width="700"> </p>
+```php
+use FaresNassar\ApiVault\Formatter;
 
-⚙️ Detailed Chaining Options
-📊 Standard Response Structure
-Every response returns a consistent structure, making life easier for Frontend developers:
+$formatter = new Formatter();
 
-📞 Contact Me
-Whether you have a suggestion, found a bug, or want to collaborate, feel free to reach out!
+return $formatter
+    ->message('Users Retrieved Successfully')
+    ->data(User::all())
+    ->code(200)
+    ->send();
+```
 
-Name: Fares Nassar (ايرانور)
+### 2️⃣ Using callback() with caching
 
-Role: Backend Laravel Developer
+```php
+return $formatter
+    ->message('Users Retrieved And Cached Successfully')
+    ->cache('users_cache_key', 600)
+    ->callback(fn () => User::where('id', '<', 10000)->get())
+    ->code(200)
+    ->send();
+```
 
-GitHub:
+### 3️⃣ Using callback() without caching
 
-LinkedIn:
+```php
+return $formatter
+    ->message('Users Retrieved Successfully')
+    ->callback(fn () => User::all()) // lazy evaluation, no caching
+    ->code(200)
+    ->send();
+```
 
-Email:
+### 4️⃣ Sending additional meta data
 
-🤝 Contributing
-Fork the Project.
+```php
+return $formatter
+    ->message('Users Retrieved Successfully')
+    ->data(User::all())
+    ->additional([
+        'cached' => false,
+        'execution_time' => '12ms',
+        'debug' => true
+    ])
+    ->send();
+```
 
-Create your Feature Branch.
+### 5️⃣ Custom headers and JSON options
 
-Commit your Changes.
+```php
+return $formatter
+    ->message('Custom Response')
+    ->data($data)
+    ->headers([
+        'X-App-Version' => '1.0.0'
+    ])
+    ->jsonOptions(JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
+    ->send();
+```
 
-Push to the Branch.
+---
 
-Open a Pull Request.
+## 🛠️ Available Methods
 
-📜 License
-Distributed under the MIT License. See LICENSE for more information.
+- `message()`      → Set response message  
+- `data()`         → Set response data directly  
+- `cache()`        → Enable caching (key, seconds)  
+- `callback()`     → Lazy data execution (can be used with or without caching)  
+- `code()`         → HTTP status code (default: 200)  
+- `additional()`   → Set extra meta data  
+- `headers()`      → Custom response headers  
+- `jsonOptions()`  → Set JSON encoding options (int)  
+- `send()`         → Return the final response  
 
-Created with ❤️ by Fares Nassar
+---
 
+## 📄 Example JSON Response
 
+```json
+{
+  "success": true,
+  "message": "Users Retrieved Successfully",
+  "data": [
+    {"id": 1, "name": "Fares Ahmed"},
+    {"id": 2, "name": "Ali Mohamed"}
+  ],
+
+  "code": 200,
+  "additional": {
+    "cached": false,
+    "execution_time": "12ms",
+    "debug": true
+  }
+}
+```
+
+---
+
+## 📄 License
+
+MIT License
+
+---
+
+## 👨‍💻 Author
+
+Fares Nassar  
+GitHub: https://github.com/faresnassar09  
+
+---
+
+Built for clean APIs, not messy controllers 🚀
