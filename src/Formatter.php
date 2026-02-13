@@ -85,6 +85,6 @@ class Formatter
 
 
 
-        return response()->json($finalResponse, $this->code, $this->headers, $this->options);
+        return response()->json($finalResponse, $this->code, $this->headers, $this->jsonOptions);
     }
 }

@@ -12,7 +12,7 @@ trait HasResponseMetadata
     protected int $code = 200;
     protected array $headers=[];
     protected array $additional = [];
-    protected int $options = 0;
+    protected int $jsonOptions = 0;
     protected ?Closure $callback = null;
     protected bool $success = true;
 
@@ -60,9 +60,9 @@ trait HasResponseMetadata
         return $this;
     }
 
-    public function options($options = 0){
+    public function jsonOptions($jsonOptions = 0){
 
-        $this->options = $options;
+        $this->jsonOptions = $jsonOptions;
 
         return $this;
     }

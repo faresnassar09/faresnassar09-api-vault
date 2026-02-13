@@ -23,8 +23,15 @@ trait HasCaching
     protected function resolveCachedData()
     {
 
-        $page = request('page', 1);
-        $finalKey = $this->cacheKey . '_page_' . $page;
+
+$finalKey = $this->cacheKey;
+
+    if (request()->has('page')) {
+        $finalKey .= '_page_' . request('page', 1);
+    }
+
+
+    
         $callback = $this->callback;
         return Cache::remember($finalKey, $this->timeToDestroy, function() use ($callback) {
             return $callback();
