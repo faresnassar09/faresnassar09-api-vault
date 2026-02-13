@@ -1,3 +1,4 @@
+[![Run Tests](https://github.com/faresnassar09/faresnassar09-api-vault/actions/workflows/tests.yml/badge.svg)](https://github.com/faresnassar09/faresnassar09-api-vault/actions/workflows/tests.yml)
 # 🔐 API Vault
 
 **API Vault** is a lightweight Laravel utility for building clean, consistent, and chainable API responses with optional caching, callbacks, headers, and response customization.
